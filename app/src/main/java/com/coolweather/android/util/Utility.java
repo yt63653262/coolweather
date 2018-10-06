@@ -62,7 +62,7 @@ public class Utility {
     public static boolean handleCountyResponse(String response,int cityId) {
         if (!TextUtils.isEmpty(response)) {
             try {
-                JSONArray allCounties = new JSONArray(response);
+                JSONArray allCounties = new JSONArray(response);//最外层就是一个json数组
                 for (int i = 0; i < allCounties.length(); i++) {
                     JSONObject countyObject = allCounties.getJSONObject(i);
                     County county = new County();
@@ -83,10 +83,10 @@ public class Utility {
      */
     public static Weather handleWeatherResponse(String response) {
         try {
-            JSONObject jsonObject = new JSONObject(response);
+            JSONObject jsonObject = new JSONObject(response);//返回的数据最外层是json对象，然后对象里又包含了一个json数组，数组里面的项又是json键值对格式的
             JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
             String weatherContent = jsonArray.getJSONObject(0).toString();
-            return new Gson().fromJson(weatherContent,Weather.class);
+            return new Gson().fromJson(weatherContent,Weather.class);//转换成单一的实体对象
         } catch (Exception e) {
             e.printStackTrace();
         }
